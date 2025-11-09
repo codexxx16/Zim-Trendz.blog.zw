@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZimTrendz - Zimbabwe's Voice in 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --zim-color: #FF9933;
+            --trendz-color: #0099CC;
+            --accent-color: #CC3333;
+            --dark-bg: #121212;
+            --light-text: #f5f5f5;
+            --card-bg: #1e1e1e;
+            --transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+            background: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-zim {
+            color: var(--zim-color);
+            text-shadow: 0 0 10px rgba(255, 153, 51, 0.7);
+            transform: rotateY(0deg);
+            transition: transform 0.5s ease;
+        }
+
+        .logo-trendz {
+            color: var(--trendz-color);
+            text-shadow: 0 0 10px rgba(0, 153, 204, 0.7);
+            transform: rotateY(0deg);
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover .logo-zim {
+            transform: rotateY(180deg);
+        }
+
+        .logo:hover .logo-trendz {
+            transform: rotateY(-180deg);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition);
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--zim-color), var(--trendz-color));
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            color: var(--zim-color);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 10;
+            position: relative;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, var(--zim-color), var(--trendz-color));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 3D Scene */
+        #scene-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--zim-color), var(--trendz-color));
+        }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+
+        .article-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .article-image {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .article-content {
+            padding: 20px;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .article-category {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .article-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .article-excerpt {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .article-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .likes {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .like-btn {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .like-btn:hover {
+            color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        .admin-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            height: 400px;
+            border-radius: 20px;
+            background: linear-gradient(45deg, var(--zim-color), var(--trendz-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(10deg);
+            transition: var(--transition);
+        }
+
+        .about-image:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        .about-image i {
+            font-size: 8rem;
+            color: white;
+            opacity: 0.7;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--zim-color), var(--trendz-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--light-text);
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--zim-color);
+            box-shadow: 0 0 10px rgba(255, 153, 51, 0.3);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Chatroom */
+        .chatroom {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            background: linear-gradient(45deg, var(--zim-color), var(--trendz-color));
+            color: white;
+            font-weight: 600;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .chat-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            opacity: 0.7;
+        }
+
+        .chat-empty i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: var(--light-text);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .chat-input button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, var(--zim-color), var(--trendz-color));
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chat-input button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-links-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links-column ul {
+            list-style: none;
+        }
+
+        .footer-links-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links-column ul li a {
+            color: var(--light-text);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .footer-links-column ul li a:hover {
+            opacity: 1;
+            color: var(--zim-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content, .contact-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                margin-top: 30px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        /* 3D Animation Effects */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, -15px); }
+            100% { transform: translate(0, 0px); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 153, 51, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 153, 51, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 153, 51, 0); }
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--zim-color), 0 0 20px var(--zim-color); }
+            to { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--trendz-color), 0 0 40px var(--trendz-color); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <span class="logo-zim">Zim</span><span class="logo-trendz">Trendz</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#articles">Articles</a></li>
+                    <li><a href="#headlines">Headlines</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#chat">Chatroom</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div id="scene-container"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Zimbabwe's Voice in <span class="glow">2025</span></h1>
+                <p>Bringing you the latest news, trends, and stories from Zimbabwe. Politics, fashion, food, health, education and more.</p>
+                <a href="#articles" class="btn">Explore Articles</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section id="articles">
+        <div class="container">
+            <div class="section-title">
+                <h2>Latest Articles</h2>
+            </div>
+            <div class="articles-grid">
+                <!-- Article 1 -->
+                <div class="article-card floating">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1589561454226-796a8aa89b44?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="admin-badge">Admin</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-date">October 15, 2025</span>
+                            <span class="article-views"><i class="far fa-eye"></i> 2.4K</span>
+                        </div>
+                        <span class="article-category">Politics</span>
+                        <h3 class="article-title">Zimbabwe's New Economic Policy Shows Promising Results</h3>
+                        <p class="article-excerpt">The government's latest economic reforms are beginning to show positive impacts on inflation and employment rates across the country.</p>
+                        <div class="article-actions">
+                            <div class="likes">
+                                <button class="like-btn"><i class="far fa-heart"></i></button>
+                                <span class="like-count">342</span>
+                            </div>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 2 -->
+                <div class="article-card floating" style="animation-delay: 0.2s;">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1556909114-4d0d853e5e16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="admin-badge">Admin</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-date">October 12, 2025</span>
+                            <span class="article-views"><i class="far fa-eye"></i> 1.8K</span>
+                        </div>
+                        <span class="article-category">Fashion</span>
+                        <h3 class="article-title">Harare Fashion Week 2025: Local Designers Take Center Stage</h3>
+                        <p class="article-excerpt">This year's fashion week showcased incredible talent from Zimbabwean designers, blending traditional patterns with modern aesthetics.</p>
+                        <div class="article-actions">
+                            <div class="likes">
+                                <button class="like-btn"><i class="far fa-heart"></i></button>
+                                <span class="like-count">215</span>
+                            </div>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 3 -->
+                <div class="article-card floating" style="animation-delay: 0.4s;">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1570197788417-0e82375c9371?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="admin-badge">Admin</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-date">October 10, 2025</span>
+                            <span class="article-views"><i class="far fa-eye"></i> 3.1K</span>
+                        </div>
+                        <span class="article-category">Food</span>
+                        <h3 class="article-title">Traditional Zimbabwean Cuisine Makes a Comeback</h3>
+                        <p class="article-excerpt">Young chefs are rediscovering and modernizing traditional Zimbabwean dishes, creating a culinary revolution in urban centers.</p>
+                        <div class="article-actions">
+                            <div class="likes">
+                                <button class="like-btn"><i class="far fa-heart"></i></button>
+                                <span class="like-count">428</span>
+                            </div>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 4 -->
+                <div class="article-card floating" style="animation-delay: 0.6s;">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="admin-badge">Admin</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-date">October 8, 2025</span>
+                            <span class="article-views"><i class="far fa-eye"></i> 2.7K</span>
+                        </div>
+                        <span class="article-category">Health</span>
+                        <h3 class="article-title">New Healthcare Initiative Reaches Rural Zimbabwe</h3>
+                        <p class="article-excerpt">A government partnership with international organizations is bringing much-needed healthcare services to remote areas of Zimbabwe.</p>
+                        <div class="article-actions">
+                            <div class="likes">
+                                <button class="like-btn"><i class="far fa-heart"></i></button>
+                                <span class="like-count">319</span>
+                            </div>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 5 -->
+                <div class="article-card floating" style="animation-delay: 0.8s;">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="admin-badge">Admin</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-date">October 5, 2025</span>
+                            <span class="article-views"><i class="far fa-eye"></i> 1.5K</span>
+                        </div>
+                        <span class="article-category">Education</span>
+                        <h3 class="article-title">Digital Learning Platforms Transform Zimbabwean Education</h3>
+                        <p class="article-excerpt">Schools across Zimbabwe are adopting new digital learning tools, bridging the educational gap between urban and rural areas.</p>
+                        <div class="article-actions">
+                            <div class="likes">
+                                <button class="like-btn"><i class="far fa-heart"></i></button>
+                                <span class="like-count">267</span>
+                            </div>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article 6 -->
+                <div class="article-card floating" style="animation-delay: 1s;">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="admin-badge">Admin</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-date">October 3, 2025</span>
+                            <span class="article-views"><i class="far fa-eye"></i> 2.9K</span>
+                        </div>
+                        <span class="article-category">Technology</span>
+                        <h3 class="article-title">Zimbabwe's Tech Startups Attract International Investment</h3>
+                        <p class="article-excerpt">Local tech entrepreneurs are developing innovative solutions to Zimbabwe's challenges, catching the attention of global investors.</p>
+                        <div class="article-actions">
+                            <div class="likes">
+                                <button class="like-btn"><i class="far fa-heart"></i></button>
+                                <span class="like-count">384</span>
+                            </div>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Headlines Section -->
+    <section id="headlines">
+        <div class="container">
+            <div class="section-title">
+                <h2>Breaking Headlines</h2>
+            </div>
+            <div class="articles-grid">
+                <!-- Add more headline articles here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Hi there 👋</h3>
+                    <p>My name is Charless and I'm a Zimbabwean blogger speaking for the voiceless through this channel. If you have any story you'd like Zimbabwe to know about, feel free to contact me and I'll handle the publishing.</p>
+                    <p>I started ZimTrendz in 2023 with a mission to share authentic stories from Zimbabwe - the challenges, the triumphs, and everything in between. Through this platform, I aim to amplify voices that often go unheard and shed light on issues that matter to ordinary Zimbabweans.</p>
+                    <p>My work covers a wide range of topics including politics, food, fashion, health, and education - all with the goal of painting a comprehensive picture of life in Zimbabwe today.</p>
+                    <a href="#contact" class="btn pulse" style="margin-top: 20px;">Get In Touch</a>
+                </div>
+                <div class="about-image">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Me</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h3>WhatsApp</h3>
+                            <p><a href="https://wa.me/27783587279" style="color: var(--light-text); text-decoration: none;">+277-8358-7279</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="far fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p><a href="mailto:lyrikingxxx@gmail.com" style="color: var(--light-text); text-decoration: none;">lyrikingxxx@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Address</h3>
+                            <p><a href="https://www.google.com/maps/place/Ngundu,+Masvingo,+Zimbabwe" target="_blank" style="color: var(--light-text); text-decoration: none;">Ngundu, Masvingo, Zimbabwe</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatroom Section -->
+    <section id="chat">
+        <div class="container">
+            <div class="section-title">
+                <h2>Community Chatroom</h2>
+            </div>
+            <div class="chatroom">
+                <div class="chat-header">
+                    <i class="fas fa-comments"></i> ZimTrendz Community Chat
+                </div>
+                <div class="chat-messages">
+                    <div class="chat-empty">
+                        <i class="far fa-comment-dots"></i>
+                        <p>Oops no one is here at the moment, leave a message.</p>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Type your message here...">
+                    <button><i class="fas fa-paper-plane"></i> Send</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">
+                        <span class="logo-zim">Zim</span><span class="logo-trendz">Trendz</span>
+                    </div>
+                    <p>Zimbabwe's Voice in 2025. Bringing you authentic stories and news from the heart of Zimbabwe.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#articles">Articles</a></li>
+                            <li><a href="#headlines">Headlines</a></li>
+                            <li><a href="#about">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Categories</h3>
+                        <ul>
+                            <li><a href="#">Politics</a></li>
+                            <li><a href="#">Fashion</a></li>
+                            <li><a href="#">Food</a></li>
+                            <li><a href="#">Health</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Contact</h3>
+                        <ul>
+                            <li><a href="https://wa.me/27783587279">WhatsApp: +277-8358-7279</a></li>
+                            <li><a href="mailto:lyrikingxxx@gmail.com">Email: lyrikingxxx@gmail.com</a></li>
+                            <li><a href="https://www.google.com/maps/place/Ngundu,+Masvingo,+Zimbabwe" target="_blank">Address: Ngundu, Masvingo</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>ZimTrendz | All rights reserved 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Three.js 3D Scene
+        let scene, camera, renderer, particles;
+        
+        function initThreeJS() {
+            // Create scene
+            scene = new THREE.Scene();
+            
+            // Create camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            document.getElementById('scene-container').appendChild(renderer.domElement);
+            
+            // Create particles
+            const particleCount = 1000;
+            const particles = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                // Positions
+                positions[i] = (Math.random() - 0.5) * 50;
+                positions[i + 1] = (Math.random() - 0.5) * 50;
+                positions[i + 2] = (Math.random() - 0.5) * 50;
+                
+                // Colors - using ZimTrendz color scheme
+                const colorChoice = Math.random();
+                if (colorChoice < 0.5) {
+                    // Zim color (orange)
+                    colors[i] = 1.0; // R
+                    colors[i + 1] = 0.6; // G
+                    colors[i + 2] = 0.2; // B
+                } else {
+                    // Trendz color (blue)
+                    colors[i] = 0.0; // R
+                    colors[i + 1] = 0.6; // G
+                    colors[i + 2] = 0.8; // B
+                }
+            }
+            
+            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            // Create particle system
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 0.1,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const particleSystem = new THREE.Points(particles, particleMaterial);
+            scene.add(particleSystem);
+            
+            // Add lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particleSystem.rotation.x += 0.001;
+                particleSystem.rotation.y += 0.002;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Like button functionality
+        document.querySelectorAll('.like-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const heartIcon = this.querySelector('i');
+                const likeCount = this.nextElementSibling;
+                
+                if (heartIcon.classList.contains('far')) {
+                    heartIcon.classList.remove('far');
+                    heartIcon.classList.add('fas');
+                    heartIcon.style.color = 'var(--accent-color)';
+                    likeCount.textContent = parseInt(likeCount.textContent) + 1;
+                } else {
+                    heartIcon.classList.remove('fas');
+                    heartIcon.classList.add('far');
+                    heartIcon.style.color = '';
+                    likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                }
+            });
+        });
+        
+        // Chat functionality
+        const chatInput = document.querySelector('.chat-input input');
+        const chatSendBtn = document.querySelector('.chat-input button');
+        const chatMessages = document.querySelector('.chat-messages');
+        
+        chatSendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                // Remove empty state if it exists
+                const emptyState = document.querySelector('.chat-empty');
+                if (emptyState) {
+                    emptyState.remove();
+                }
+                
+                // Create message element
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('chat-message');
+                messageElement.innerHTML = `
+                    <div class="message-content">
+                        <p>${message}</p>
+                        <span class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                    </div>
+                `;
+                
+                // Add to chat
+                chatMessages.appendChild(messageElement);
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Clear input
+                chatInput.value = '';
+            }
+        }
+        
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            this.reset();
+        });
+        
+        // Initialize Three.js when page loads
+        window.addEventListener('load', initThreeJS);
+    </script>
+</body>
+</html>
